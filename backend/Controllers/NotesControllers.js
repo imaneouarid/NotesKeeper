@@ -1,6 +1,6 @@
-import express from 'express';
+import db from "../Models/NotesModels"
+const Note = db.note;
 
-// Create a new note
 export const createNote = async (req, res) => {
     try {
       const { title, content } = req.body;
@@ -12,8 +12,6 @@ export const createNote = async (req, res) => {
     }
   };
   
-
-
   export const getNotes = async (req, res) => {
     try {
       const notes = await Note.find();
@@ -22,7 +20,6 @@ export const createNote = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
-
 
 export const getNoteById = async (req, res) => {
     try {
@@ -36,4 +33,27 @@ export const getNoteById = async (req, res) => {
     }
   };
 
-
+exports.updateNote = async (req, res) => {
+    try {
+        const { title, content } = req.body;
+        const updatedNote = await Note.findByIdAndUpdate(req.params.id, {
+            title,
+            content,
+            updatedAt: Date.now()
+        }, { new: true });
+        res.json(updatedNote);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+exports.deleteNote = async (req, res) => {
+    try {
+        await Note.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Note deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+  };
