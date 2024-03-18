@@ -1,7 +1,4 @@
-// notesController.js
 import express from 'express';
-const router = express.Router();
-import Note from './NotesModel.js'; 
 
 // Create a new note
 export const createNote = async (req, res) => {
@@ -25,17 +22,7 @@ export const createNote = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
-router.get('/notes/:id', async (req, res) => {
-  try {
-    const note = await Note.findById(req.params.id);
-    if (note == null) {
-      return res.status(404).json({ message: 'Note not found' });
-    }
-    res.json(note);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+
 
 export const getNoteById = async (req, res) => {
     try {
