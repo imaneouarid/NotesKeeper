@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from 'dotenv';
-import Note from './NotesModel.js'; 
+import Note from './NotesModels.js'; 
 
 dotenv.config();
 const db = {};

@@ -1,9 +1,9 @@
-import db from "../Models/NotesModels"
-const Note = db.note;
+import db from "../Models/index.js"
+const Note = db.Note;
 
 export const createNote = async (req, res) => {
     try {
-      const { title, content } = req.body;
+      const { title , content } = req.body;
       const newNote = new Note({ title, content });
       const savedNote = await newNote.save();
       res.status(201).json(savedNote);
@@ -33,7 +33,7 @@ export const getNoteById = async (req, res) => {
     }
   };
 
-exports.updateNote = async (req, res) => {
+export const updateNote = async (req, res) => {
     try {
         const { title, content } = req.body;
         const updatedNote = await Note.findByIdAndUpdate(req.params.id, {
@@ -48,7 +48,7 @@ exports.updateNote = async (req, res) => {
     }
   };
   
-exports.deleteNote = async (req, res) => {
+  export const deleteNote = async (req, res) => {
     try {
         await Note.findByIdAndDelete(req.params.id);
         res.json({ message: 'Note deleted successfully' });
